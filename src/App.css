@@ -71,9 +71,9 @@
   background-color: #444;
   color: #fff;
   border-radius: 5px;
-  padding: 20px;
-
+  padding: 15px;
   width: 25em;
+  margin-bottom: 10px;
 }
 
 .versusCard {
@@ -86,4 +86,5 @@
   align-items: center;
   font-size: 150%;
   font-weight: bold;
+  margin: 5px;
 }
