@@ -1,3 +1,4 @@
+import uniqid from 'uniqid';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
@@ -84,7 +85,7 @@ const TeamsGenerator = () => {
               <div>
                 <div>{teamOneName}</div>
                 {teamOne.map((robot) => (
-                  <RobotCard key={robot.id} robot={robot} />
+                  <RobotCard key={uniqid.time()} robot={robot} />
                 ))}
               </div>
             )}
@@ -101,7 +102,7 @@ const TeamsGenerator = () => {
               <div>
                 <div>{teamTwoName}</div>
                 {teamTwo.map((robot) => (
-                  <RobotCard key={robot.id} robot={robot} />
+                  <RobotCard key={uniqid.time()} robot={robot} />
                 ))}
               </div>
             )}

@@ -43,7 +43,6 @@
   min-height: 90vh;
 }
 .gameArea {
-  border: 2px solid blue;
   min-height: 70vh;
 }
 
@@ -61,7 +60,6 @@
 }
 
 .buttonsArea {
-  border: 2px solid red;
   margin-top: 20px;
   display: grid;
   gap: 20px;
@@ -74,12 +72,11 @@
   color: #fff;
   border-radius: 5px;
   padding: 20px;
-  /* font-size: 150%; */
+
   width: 25em;
 }
 
 .versusCard {
-  border: 2px solid blue;
   display: flex;
   justify-content: space-around;
 }
