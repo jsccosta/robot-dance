@@ -128,7 +128,7 @@ const TeamsGenerator = () => {
       {showDancePairs && (
         <>
           <Link to="/scores">
-            <button>View scores</button>
+            <button onClick={playAgainHandler}>View scores</button>
           </Link>
 
           <button onClick={playAgainHandler}>Play again</button>
