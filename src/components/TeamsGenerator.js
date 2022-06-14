@@ -38,6 +38,24 @@ const TeamsGenerator = () => {
   const [teamTwo, setTeamTwo] = useState([]);
 
   const [availableRobots, setavailableRobots] = useState([]);
+  const [dancePairs, setDancePairs] = useState([]);
+
+  const [showDanceParis, setShowDanceParis] = useState(false);
+
+  useEffect(() => {
+    if (teamOne.length > 0 && teamTwo.length > 0) {
+      const dancePairs = teamOne.map((robot, idx) => {
+        const robot1Value = robot.experience * Math.random();
+        const robot2 = teamTwo[idx];
+        const robot2Value = robot2.experience * Math.random();
+        return {
+          robot1: { ...robot, winner: robot1Value > robot2Value },
+          robot2: { ...robot2, winner: robot2Value > robot1Value },
+        };
+      });
+      setDancePairs(dancePairs);
+    }
+  }, [teamOne, teamTwo]);
 
   useEffect(() => {
     const getRobots = async () => {
@@ -68,46 +86,73 @@ const TeamsGenerator = () => {
 
   return (
     <>
-      <div className="teamsGenerator">
-        <div className="leftTeamPane">
-          {teamOne.length === 0 && teamOneName === '' && (
-            <FormElement
-              buttonLabel={'Generate team one'}
-              buttonCallback={() => teamGenerator('teamOne')}
-              teamNameSetter={setTeamOneName}
-            />
-          )}
-          {teamOne.length > 0 && teamOneName !== '' && (
-            <div>
-              <div>{teamOneName}</div>
-              {teamOne.map((robot) => (
-                <RobotCard key={robot.id} robot={robot} />
-              ))}
-            </div>
-          )}
+      {!showDanceParis ? (
+        <div className="teamsGenerator">
+          <div className="leftTeamPane">
+            {teamOne.length === 0 && teamOneName === '' && (
+              <FormElement
+                buttonLabel={'Generate team one'}
+                buttonCallback={() => teamGenerator('teamOne')}
+                teamNameSetter={setTeamOneName}
+              />
+            )}
+            {teamOne.length > 0 && teamOneName !== '' && (
+              <div>
+                <div>{teamOneName}</div>
+                {teamOne.map((robot) => (
+                  <RobotCard key={robot.id} robot={robot} />
+                ))}
+              </div>
+            )}
+          </div>
+          <div className="rightTeamPane">
+            {teamTwo.length === 0 && teamTwoName === '' && (
+              <FormElement
+                buttonLabel={'Generate team two'}
+                buttonCallback={() => teamGenerator('teamTwo')}
+                teamNameSetter={setTeamTwoName}
+              />
+            )}
+            {teamTwo.length > 0 && teamTwoName !== '' && (
+              <div>
+                <div>{teamTwoName}</div>
+                {teamTwo.map((robot) => (
+                  <RobotCard key={robot.id} robot={robot} />
+                ))}
+              </div>
+            )}
+          </div>
         </div>
-        <div className="rightTeamPane">
-          {teamTwo.length === 0 && teamTwoName === '' && (
-            <FormElement
-              buttonLabel={'Generate team two'}
-              buttonCallback={() => teamGenerator('teamTwo')}
-              teamNameSetter={setTeamTwoName}
-            />
-          )}
-          {teamTwo.length > 0 && teamTwoName !== '' && (
-            <div>
-              <div>{teamTwoName}</div>
-              {teamTwo.map((robot) => (
-                <RobotCard key={robot.id} robot={robot} />
-              ))}
-            </div>
-          )}
+      ) : (
+        <div className="faceOffContainer">
+          {dancePairs.map((item) => (
+            <>
+              <div className="versusCard">
+                <div>
+                  {
+                    <RobotCard
+                      robot={item.robot1}
+                      winner={item.robot1.winner}
+                    />
+                  }
+                </div>
+                Vs
+                <div>
+                  {
+                    <RobotCard
+                      robot={item.robot2}
+                      winner={item.robot2.winner}
+                    />
+                  }
+                </div>
+              </div>
+            </>
+          ))}
         </div>
-      </div>
+      )}
+
       {teamOneName !== '' && teamTwoName !== '' && (
-        <Link to="/danceOff">
-          <button>Start Dance off</button>
-        </Link>
+        <button onClick={() => setShowDanceParis(true)}>Start Dance off</button>
       )}
     </>
   );
