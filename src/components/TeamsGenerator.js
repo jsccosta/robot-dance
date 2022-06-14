@@ -126,18 +126,20 @@ const TeamsGenerator = () => {
         </div>
       )}
 
-      {teamOneName !== '' && teamTwoName !== '' && (
+      {teamOneName !== '' && teamTwoName !== '' && !showDancePairs && (
         <button onClick={() => setShowDancePairs(true)}>Start Dance off</button>
       )}
-      {}
-      {/* show only before game kickoff */}
-      <Link to="/scores">
-        <button>View scores</button>
-      </Link>
-      {/* show when dance off is done */}
-      <Link to="/teamsGenerator">
-        <button>Play again</button>
-      </Link>
+      {showDancePairs && (
+        <>
+          <Link to="/scores">
+            <button>View scores</button>
+          </Link>
+
+          <Link to="/teamsGenerator">
+            <button>Play again</button>
+          </Link>
+        </>
+      )}
     </>
   );
 };
