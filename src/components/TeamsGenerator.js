@@ -1,46 +1,114 @@
 import { Link } from 'react-router-dom';
+import { useState, useEffect, useRef } from 'react';
 
 import RobotCard from './RobotCard';
 import { generateRobotTeam } from '../utils';
 
-const TeamGeneratorForm = () => {
-  const handleSubmit = () => {};
+const FormElement = ({ buttonCallback, teamNameSetter, buttonLabel }) => {
+  const [inputValue, setInputValue] = useState('');
 
+  const inputRef = useRef();
+  const clickHandler = () => {
+    teamNameSetter(inputRef.current.value);
+    buttonCallback();
+  };
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="teamNameInput">Team name:</label>
-        <input id="teamNameInput" type="text" />
-      </div>
-      <button type="submit">Generate team</button>
-    </form>
+    <div>
+      <label
+        htmlFor="teamNameInput"
+        value={inputValue}
+        onChange={(e) => {
+          e.preventDefault();
+          setInputValue(e.target.value);
+        }}
+      >
+        Team name:
+      </label>
+      <input id="teamNameInput" type="text" ref={inputRef} />
+      <button onClick={clickHandler}>{buttonLabel}</button>
+    </div>
   );
 };
 
 const TeamsGenerator = () => {
-  const teamOne = generateRobotTeam(5);
-  // team two should not include items from team one
-  const teamTwo = generateRobotTeam(5);
+  const [teamOneName, setTeamOneName] = useState('');
+  const [teamTwoName, setTeamTwoName] = useState('');
+
+  const [teamOne, setTeamOne] = useState([]);
+  const [teamTwo, setTeamTwo] = useState([]);
+
+  const [availableRobots, setavailableRobots] = useState([]);
+
+  useEffect(() => {
+    const getRobots = async () => {
+      const robots = await fetch(
+        'https://challenge.parkside-interactive.com/api/robots',
+      )
+        .then((res) => res.json())
+        .then((robots) => robots.filter((robot) => robot.outOfOrder === false));
+
+      setavailableRobots(robots);
+    };
+
+    getRobots();
+  }, []);
+
+  const teamGenerator = (team) => {
+    if (team === 'teamOne') {
+      const newTeam = generateRobotTeam(availableRobots, 5);
+      setTeamOne(newTeam);
+    } else if (team === 'teamTwo') {
+      const remainingRobots = availableRobots.filter(
+        (robot) => teamOne.indexOf(robot.id) === -1,
+      );
+      const newTeam = generateRobotTeam(remainingRobots, 5);
+      setTeamTwo(newTeam);
+    }
+  };
 
   return (
     <>
       <div className="teamsGenerator">
         <div className="leftTeamPane">
-          <TeamGeneratorForm />
-          {teamOne.map((robot) => (
-            <RobotCard robot={robot} />
-          ))}
+          {teamOne.length === 0 && teamOneName === '' && (
+            <FormElement
+              buttonLabel={'Generate team one'}
+              buttonCallback={() => teamGenerator('teamOne')}
+              teamNameSetter={setTeamOneName}
+            />
+          )}
+          {teamOne.length > 0 && teamOneName !== '' && (
+            <div>
+              <div>{teamOneName}</div>
+              {teamOne.map((robot) => (
+                <RobotCard key={robot.id} robot={robot} />
+              ))}
+            </div>
+          )}
         </div>
         <div className="rightTeamPane">
-          <TeamGeneratorForm />
-          {teamTwo.map((robot) => (
-            <RobotCard robot={robot} />
-          ))}
+          {teamTwo.length === 0 && teamTwoName === '' && (
+            <FormElement
+              buttonLabel={'Generate team two'}
+              buttonCallback={() => teamGenerator('teamTwo')}
+              teamNameSetter={setTeamTwoName}
+            />
+          )}
+          {teamTwo.length > 0 && teamTwoName !== '' && (
+            <div>
+              <div>{teamTwoName}</div>
+              {teamTwo.map((robot) => (
+                <RobotCard key={robot.id} robot={robot} />
+              ))}
+            </div>
+          )}
         </div>
       </div>
-      <Link to="/danceOff">
-        <button>Start Dance off</button>
-      </Link>
+      {teamOneName !== '' && teamTwoName !== '' && (
+        <Link to="/danceOff">
+          <button>Start Dance off</button>
+        </Link>
+      )}
     </>
   );
 };

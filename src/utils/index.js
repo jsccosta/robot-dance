@@ -1,11 +1,13 @@
 import { allRobots } from '../mock';
 
-const availableRobots = allRobots.filter((robot) => robot.outOfOrder === false);
+const availableRobotsX = allRobots.filter(
+  (robot) => robot.outOfOrder === false,
+);
 
 const getRandomRobot = (robots) =>
   robots[Math.floor(Math.random() * robots.length)];
 
-export const generateRobotTeam = (teamSize = 5) => {
+export const generateRobotTeam = (availableRobots, teamSize = 5) => {
   let totalExperience = 0;
   // const currentTeam = Array.apply(null, Array(teamSize)).map(() => undefined);
   const currentTeam = [];
