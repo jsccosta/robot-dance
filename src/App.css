@@ -36,3 +36,50 @@
     transform: rotate(360deg);
   }
 }
+
+.wrapper {
+  border: 2px solid black;
+  padding: 2em;
+  min-height: 90vh;
+}
+.gameArea {
+  border: 2px solid blue;
+  min-height: 70vh;
+}
+
+.textContainer {
+  padding: 40px;
+  min-height: 70vh;
+}
+
+.teamsGenerator {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  gap: 0px 15px;
+  min-height: 70vh;
+}
+
+.buttonsArea {
+  border: 2px solid red;
+  margin-top: 20px;
+  display: grid;
+  gap: 20px;
+  min-height: 70px;
+}
+
+.box {
+  display: flex;
+  background-color: #444;
+  color: #fff;
+  border-radius: 5px;
+  padding: 20px;
+  font-size: 150%;
+}
+
+.versusCard {
+  border: 2px solid blue;
+  display: flex;
+}
+.faceOffContainer {
+}
