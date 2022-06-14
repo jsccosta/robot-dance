@@ -2,78 +2,12 @@ import './App.css';
 
 import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom';
 import Welcome from './components/Welcome';
+import TeamsGenerator from './components/TeamsGenerator';
+import RobotCard from './components/RobotCard';
+
+import { generateRobotTeam } from './utils';
 
 import { allRobots, danceOffs } from './mock';
-
-const availableRobots = allRobots.filter((robot) => robot.outOfOrder === false);
-
-const getRandomRobot = (robots) =>
-  robots[Math.floor(Math.random() * robots.length)];
-
-const generateRobotTeam = (teamSize = 5) => {
-  let totalExperience = 0;
-  // const currentTeam = Array.apply(null, Array(teamSize)).map(() => undefined);
-  const currentTeam = [];
-  for (let i = 0; i <= teamSize; i++) {
-    const randomRobot = getRandomRobot(availableRobots);
-    if (totalExperience + randomRobot.experience <= 50) {
-      totalExperience += randomRobot.experience;
-      currentTeam.push(randomRobot);
-    }
-  }
-
-  return currentTeam;
-};
-
-const generateRobotCard = (robot) => {
-  return (
-    <div className="robotCard box" key={robot.id}>
-      <div>{robot.name}</div>
-      <div>{robot.powermove}</div>
-      <div>{robot.experience}</div>
-      <div>{robot.outOfOrder}</div>
-      <img src={robot.avatar} width="100px" />
-    </div>
-  );
-};
-
-const TeamGeneratorForm = () => {
-  const handleSubmit = () => {};
-
-  return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="teamNameInput">Team name:</label>
-        <input id="teamNameInput" type="text" />
-      </div>
-      <button type="submit">Generate team</button>
-    </form>
-  );
-};
-
-const TeamsGenerator = () => {
-  const teamOne = generateRobotTeam(5);
-  // team two should not include items from team one
-  const teamTwo = generateRobotTeam(5);
-
-  return (
-    <>
-      <div className="teamsGenerator">
-        <div className="leftTeamPane">
-          <TeamGeneratorForm />
-          {teamOne.map((robot) => generateRobotCard(robot))}
-        </div>
-        <div className="rightTeamPane">
-          <TeamGeneratorForm />
-          {teamTwo.map((robot) => generateRobotCard(robot))}
-        </div>
-      </div>
-      <Link to="/danceOff">
-        <button>Start Dance off</button>
-      </Link>
-    </>
-  );
-};
 
 const DanceOff = () => {
   const danceOffPairs = () => {
@@ -99,9 +33,9 @@ const DanceOff = () => {
         {pairs.map((item) => (
           <>
             <div className="versusCard">
-              <div>{generateRobotCard(item.robot1)}</div>
+              <div>{<RobotCard robot={item.robot1} />}</div>
               Vs
-              <div>{generateRobotCard(item.robot2)}</div>
+              <div>{<RobotCard robot={item.robot2} />}</div>
             </div>
           </>
         ))}
