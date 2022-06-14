@@ -112,23 +112,9 @@ const TeamsGenerator = () => {
           {dancePairs.map((item) => (
             <>
               <div className="versusCard">
-                <div>
-                  {
-                    <RobotCard
-                      robot={item.robot1}
-                      winner={item.robot1.winner}
-                    />
-                  }
-                </div>
-                Vs
-                <div>
-                  {
-                    <RobotCard
-                      robot={item.robot2}
-                      winner={item.robot2.winner}
-                    />
-                  }
-                </div>
+                {<RobotCard robot={item.robot1} winner={item.robot1.winner} />}
+                <div className="versusSeparator">Vs</div>
+                {<RobotCard robot={item.robot2} winner={item.robot2.winner} />}
               </div>
             </>
           ))}

@@ -74,12 +74,19 @@
   color: #fff;
   border-radius: 5px;
   padding: 20px;
-  font-size: 150%;
+  /* font-size: 150%; */
+  width: 25em;
 }
 
 .versusCard {
   border: 2px solid blue;
   display: flex;
+  justify-content: space-around;
 }
-.faceOffContainer {
+
+.versusSeparator {
+  display: flex;
+  align-items: center;
+  font-size: 150%;
+  font-weight: bold;
 }
