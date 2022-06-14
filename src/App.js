@@ -1,15 +1,10 @@
 import './App.css';
 
-import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Welcome from './components/Welcome';
 import TeamsGenerator from './components/TeamsGenerator';
-import RobotCard from './components/RobotCard';
 import DanceOff from './components/DanceOff';
 import Scores from './components/Scores';
-
-import { generateRobotTeam } from './utils';
-
-import { allRobots, danceOffs } from './mock';
 
 function App() {
   return (

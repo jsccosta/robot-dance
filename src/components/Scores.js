@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import { allRobots, danceOffs } from '../mock';
+import { danceOffs } from '../mock';
 
 const Scores = () => {
   const wins = danceOffs

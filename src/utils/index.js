@@ -1,4 +1,4 @@
-import { allRobots, danceOffs } from '../mock';
+import { allRobots } from '../mock';
 
 const availableRobots = allRobots.filter((robot) => robot.outOfOrder === false);
 

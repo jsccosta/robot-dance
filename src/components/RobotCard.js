@@ -7,7 +7,7 @@ const RobotCard = ({ robot }) => {
       <div>{powermove}</div>
       <div>{experience}</div>
       <div>{outOfOrder}</div>
-      <img src={avatar} width="100px" />
+      <img alt={name} src={avatar} width="100px" />
     </div>
   );
 };
