@@ -17,6 +17,15 @@ const TeamsGenerator = () => {
 
   const [showDancePairs, setShowDancePairs] = useState(false);
 
+  const playAgainHandler = () => {
+    setTeamOneName('');
+    setTeamTwoName('');
+    setTeamOne([]);
+    setTeamTwo([]);
+    setDancePairs([]);
+    setShowDancePairs(false);
+  };
+
   useEffect(() => {
     if (teamOne.length > 0 && teamTwo.length > 0) {
       const dancePairs = teamOne.map((robot, idx) => {
@@ -135,9 +144,7 @@ const TeamsGenerator = () => {
             <button>View scores</button>
           </Link>
 
-          <Link to="/teamsGenerator">
-            <button>Play again</button>
-          </Link>
+          <button onClick={playAgainHandler}>Play again</button>
         </>
       )}
     </>
