@@ -1,34 +1,9 @@
 import { Link } from 'react-router-dom';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 
 import RobotCard from './RobotCard';
+import FormElement from './FormElement';
 import { generateRobotTeam } from '../utils';
-
-const FormElement = ({ buttonCallback, teamNameSetter, buttonLabel }) => {
-  const [inputValue, setInputValue] = useState('');
-
-  const inputRef = useRef();
-  const clickHandler = () => {
-    teamNameSetter(inputRef.current.value);
-    buttonCallback();
-  };
-  return (
-    <div>
-      <label
-        htmlFor="teamNameInput"
-        value={inputValue}
-        onChange={(e) => {
-          e.preventDefault();
-          setInputValue(e.target.value);
-        }}
-      >
-        Team name:
-      </label>
-      <input id="teamNameInput" type="text" ref={inputRef} />
-      <button onClick={clickHandler}>{buttonLabel}</button>
-    </div>
-  );
-};
 
 const TeamsGenerator = () => {
   const [teamOneName, setTeamOneName] = useState('');
@@ -40,7 +15,7 @@ const TeamsGenerator = () => {
   const [availableRobots, setavailableRobots] = useState([]);
   const [dancePairs, setDancePairs] = useState([]);
 
-  const [showDanceParis, setShowDanceParis] = useState(false);
+  const [showDancePairs, setShowDancePairs] = useState(false);
 
   useEffect(() => {
     if (teamOne.length > 0 && teamTwo.length > 0) {
@@ -86,7 +61,7 @@ const TeamsGenerator = () => {
 
   return (
     <>
-      {!showDanceParis ? (
+      {!showDancePairs ? (
         <div className="teamsGenerator">
           <div className="leftTeamPane">
             {teamOne.length === 0 && teamOneName === '' && (
@@ -152,8 +127,17 @@ const TeamsGenerator = () => {
       )}
 
       {teamOneName !== '' && teamTwoName !== '' && (
-        <button onClick={() => setShowDanceParis(true)}>Start Dance off</button>
+        <button onClick={() => setShowDancePairs(true)}>Start Dance off</button>
       )}
+      {}
+      {/* show only before game kickoff */}
+      <Link to="/scores">
+        <button>View scores</button>
+      </Link>
+      {/* show when dance off is done */}
+      <Link to="/teamsGenerator">
+        <button>Play again</button>
+      </Link>
     </>
   );
 };
