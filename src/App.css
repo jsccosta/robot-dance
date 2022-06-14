@@ -68,12 +68,12 @@
 
 .box {
   display: flex;
-  background-color: #444;
   color: #fff;
   border-radius: 5px;
   padding: 15px;
   width: 25em;
   margin-bottom: 10px;
+  justify-content: space-between;
 }
 
 .versusCard {
@@ -87,4 +87,8 @@
   font-size: 150%;
   font-weight: bold;
   margin: 5px;
+}
+
+.robotProperties {
+  text-align: left;
 }
